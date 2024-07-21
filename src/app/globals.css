@@ -2,32 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+body{
+  background-color: rgba(0, 0, 0, 0.205);
+  color: black;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+button{
+  background-color: beige;
+  border: 1px solid black;
+  padding: 10px;
+}
+input{
+  background-color: antiquewhite;
+}
+th, td{
+  margin: 10px;
+  padding: 10px;
+}
+td{
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-top:0 ;
+  border-bottom: 1px solid;
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
