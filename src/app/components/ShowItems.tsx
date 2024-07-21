@@ -35,7 +35,8 @@ const ShowItems = ({ items, error, fetchAllItems }: ShowItemsProps) => {
         type="text"
         value={filteredItem}
         onChange={search}
-        className="p-2 border border-gray-300 rounded mb-4"
+        className="search_input p-2 border border-gray-300 rounded mb-4"
+        placeholder="...filter by name,price,weight"
       />
       <table className="min-w-full bg-white border">
         <thead>
