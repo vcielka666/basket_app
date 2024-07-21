@@ -9,9 +9,9 @@ datasource db {
 }
 
 model Products {
-  id             String  @default(cuid()) @id
-  shopCenterName String
-  productName    String
-  productWeight  Float
-  productPrice   Float
+  id              String  @default(cuid()) @id
+  shopCenterName  String
+  productName     String
+  productWeight   Float
+  productPrice    Float
 }
