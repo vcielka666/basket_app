@@ -1,6 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Product } from "../types";
+import ImageComponent from "./ImageComponent";
 
 interface ShowItemsProps {
   items: Product[];
@@ -11,11 +12,27 @@ interface ShowItemsProps {
 const ShowItems = ({ items, error, fetchAllItems }: ShowItemsProps) => {
   const [filteredItem, setFilteredItem] = useState<string>("");
 
+  // Function to handle the delete request
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await fetch(`/api/products/${id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        fetchAllItems(); // Refresh the list after deleting the item
+      } else {
+        console.error("Failed to delete item");
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+
   const search = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilteredItem(event.target.value);
   };
 
-  const showSearchedItems = items.filter(item => {
+  const showSearchedItems = items.filter((item) => {
     const searchTerm = filteredItem.toLowerCase();
     return (
       item.shopCenterName.toLowerCase().includes(searchTerm) ||
@@ -27,9 +44,11 @@ const ShowItems = ({ items, error, fetchAllItems }: ShowItemsProps) => {
 
   return (
     <div>
-      <label htmlFor="search" className="block mb-2">Search {">>>"} </label>
+      <label htmlFor="search" className="block mb-2">
+        Search {">>>"}
+      </label>
       <input
-        style={{backgroundColor:"rgba(0, 0, 0, 0.07)",border:"1px solid"}}
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.07)", border: "1px solid" }}
         id="search"
         name="search"
         type="text"
@@ -45,15 +64,28 @@ const ShowItems = ({ items, error, fetchAllItems }: ShowItemsProps) => {
             <th className="py-2">Product Name</th>
             <th className="py-2">Product Weight (g)</th>
             <th className="py-2">Product Price (czk)</th>
+            <th className="py-2">Image</th>
+            <th className="py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {showSearchedItems.map(item => (
+          {showSearchedItems.map((item) => (
             <tr key={item.id} className="text-center">
               <td className="py-2">{item.shopCenterName}</td>
               <td className="py-2">{item.productName}</td>
               <td className="py-2">{item.productWeight}</td>
               <td className="py-2">{item.productPrice}</td>
+              <td className="py-2">
+                <ImageComponent imageUrl={item.imageUrl ?? ""} altText={item.productName} />
+              </td>
+              <td className="py-2">
+                <button
+                  onClick={() => handleDelete(item.id)}
+                  className="bg-red-500 text-white p-2 rounded"
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

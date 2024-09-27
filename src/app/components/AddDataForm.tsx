@@ -10,19 +10,23 @@ const AddDataForm = ({ onAdd }: AddDataFormProps) => {
   const [productName, setProductName] = useState('');
   const [productWeight, setProductWeight] = useState('');
   const [productPrice, setProductPrice] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const formData = new FormData();
+      formData.append('shopCenterName', shopCenterName);
+      formData.append('productName', productName);
+      formData.append('productWeight', productWeight);
+      formData.append('productPrice', productPrice);
+      if (imageFile) {
+        formData.append('image', imageFile);
+      }
+
       const res = await fetch('/api/products', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          shopCenterName,
-          productName,
-          productWeight: parseFloat(productWeight),
-          productPrice: parseFloat(productPrice),
-        }),
+        body: formData,
       });
 
       const data = await res.json();
@@ -30,10 +34,11 @@ const AddDataForm = ({ onAdd }: AddDataFormProps) => {
       if (res.ok) {
         console.log('Product added:', data);
         onAdd();
-        setShopCenterName("")
+        setShopCenterName("");
         setProductName("");
         setProductWeight("");
         setProductPrice("");
+        setImageFile(null);
       } else {
         console.error('Failed to add product:', data);
       }
@@ -80,7 +85,11 @@ const AddDataForm = ({ onAdd }: AddDataFormProps) => {
           value={productPrice}
           onChange={(e) => setProductPrice(e.target.value)}
         />
-        
+        <input
+          type="file"
+          onChange={(e) => setImageFile(e.target.files ? e.target.files[0] : null)}
+          className="p-2 border border-gray-300 rounded mb-2"
+        />
       </form>
       <button className='mt-5 bg-blue-500 text-white p-2 rounded' onClick={handleSubmit}>Add to database</button>
     </div>

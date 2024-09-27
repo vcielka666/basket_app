@@ -8,10 +8,12 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
+
 model Products {
-  id              String  @default(cuid()) @id
-  shopCenterName  String
-  productName     String
-  productWeight   Float
-  productPrice    Float
+  id             String  @default(cuid()) @id
+  shopCenterName String
+  productName    String
+  productWeight  Float
+  productPrice   Float
+  imageUrl       String? 
 }
