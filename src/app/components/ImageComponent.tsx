@@ -17,14 +17,15 @@ const ImageComponent = ({ imageUrl, altText }: ImageComponentProps) => {
     }
   
     return (
-    <div className="image-container">
-      <CldImage
-        src={imageUrl}
-        width="500"
-        height="500"
-        crop="fill"
-        alt={altText}
-      />
+      <div style={{ width: '100%', height: 'auto' }}>
+     <CldImage
+    src={imageUrl}
+    width="2000" // Larger width to allow flexibility
+    height="500" // Adjust height to maintain aspect ratio
+    crop="fill"
+    alt={altText}
+    style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+  />
     </div>
   );
 };
