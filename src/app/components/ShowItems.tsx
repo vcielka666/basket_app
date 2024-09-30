@@ -12,8 +12,14 @@ interface ShowItemsProps {
 const ShowItems = ({ items, error, fetchAllItems }: ShowItemsProps) => {
   const [filteredItem, setFilteredItem] = useState<string>("");
 
-  // Function to handle the delete request
-  const handleDelete = async (id: string) => {
+ // Function to handle the delete request with a password prompt
+const handleDelete = async (id: string) => {
+  const password = prompt("Please enter the password to delete this item:");
+
+  // Hardcoded password (for example, "slnko")
+  const correctPassword = "slnko";
+
+  if (password === correctPassword) {
     try {
       const res = await fetch(`/api/products/${id}`, {
         method: 'DELETE',
@@ -26,7 +32,11 @@ const ShowItems = ({ items, error, fetchAllItems }: ShowItemsProps) => {
     } catch (error) {
       console.error("Error deleting item:", error);
     }
-  };
+  } else {
+    alert("Incorrect password. Unable to delete the item.");
+  }
+};
+
 
   const search = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilteredItem(event.target.value);
