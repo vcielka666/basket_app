@@ -81,7 +81,6 @@ const ShowItems = ({ items, error, fetchAllItems }: ShowItemsProps) => {
             <th className="py-2">Product Price (czk)</th>
             <th className="py-2">Image</th>
             <th className="py-2">Times in searched weight</th>
-            <th className="py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -122,14 +121,7 @@ const ShowItems = ({ items, error, fetchAllItems }: ShowItemsProps) => {
                     ? `${timesFit}x`
                     : "-"}
                 </td>
-                <td className="py-2">
-                  <button
-                    onClick={() => handleDelete(item.id)}
-                    className="text-red-500"
-                  >
-                    Delete
-                  </button>
-                </td>
+                
               </tr>
             );
           })}
